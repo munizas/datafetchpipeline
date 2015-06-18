@@ -1,8 +1,12 @@
+#!/usr/bin/python
+
 import os.path
 import urlparse
 import re
 import subprocess
 import time
+import datetime
+import errno
 
 # sleep interval in seconds
 ps_check_interval = 15
@@ -10,8 +14,8 @@ ps_check_interval = 15
 class FtpFetch:
 
 	def __init__(self, netloc, collection, file_name_root, save_dir, *file_ext):
-		self.cmd = ['wget']
-		self.opts = ['--background', '--no-host-directories', '--recursive', '--server-response', '--timestamping']	
+		self.cmd = ['/usr/local/bin/wget']
+		self.opts = ['--background', '--no-host-directories', '--recursive', '--server-response', '--timestamping', '-nd']	
 
 		self.scheme = 'ftp'
 		self.netloc = netloc
@@ -43,7 +47,18 @@ class FtpFetch:
 		    else:
 		        break
 
-		print 'done', self.file_name_root, ':)'
+		print 'done downloading', self.file_name_root, ':)'
+		print 'moving log file...'
+
+		logpath = self.save_dir+'/logs/'
+		try:
+			os.makedirs(logpath)
+   		except OSError as exc:
+   			if exc.errno == errno.EEXIST and os.path.isdir(logpath):
+   				pass
+   			else: raise
+		os.rename(self.file_name_root+'log', logpath+str(datetime.date.today())+'-'+self.file_name_root+'log')
+		print 'log file moved...'
 
 	def __str__(self):
 		return "scheme: " + self.scheme + "\nnetwork location: " + self.netloc + "\nfile_name_root: " + self.file_name_root + "\nsave_dir" + self.save_dir
