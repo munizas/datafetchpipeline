@@ -15,7 +15,7 @@ class FtpFetch:
 
 	def __init__(self, netloc, collection, file_name_root, save_dir, *file_ext):
 		self.cmd = ['/usr/local/bin/wget']
-		self.opts = ['--background', '--no-host-directories', '--recursive', '--server-response', '--timestamping', '-nd']	
+		self.opts = ['--background', '--recursive', '--server-response', '--timestamping', '-nd']	
 
 		self.scheme = 'ftp'
 		self.netloc = netloc
