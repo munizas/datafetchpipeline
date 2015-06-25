@@ -57,7 +57,9 @@ class FtpFetch:
    			if exc.errno == errno.EEXIST and os.path.isdir(logpath):
    				pass
    			else: raise
-		os.rename(self.file_name_root+'log', logpath+str(datetime.date.today())+'-'+self.file_name_root+'log')
+
+   		self.log_loc = logpath+str(datetime.date.today())+'-'+self.file_name_root+'log'
+		os.rename(self.file_name_root+'log', self.log_loc)
 		print 'log file moved...'
 
 	def __str__(self):
