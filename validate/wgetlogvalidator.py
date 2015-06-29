@@ -106,7 +106,7 @@ class WgetLogValidator:
                     # successful completion; reset logicals
                     downloading = False
                     saved_match = None
-                    self.download_list.append(tt_match.group(1))
+                    self.download_list.append('\'' + tt_match.group(1) + '\'')
                 elif self.finished.match(line):
                     _finished_  = True
                 elif self.regex_saved_file_loc.search(line):
