@@ -85,7 +85,7 @@ class USGSFetch:
 		Fetch object that is designed to retrieve data from http://e4ftl01.cr.usgs.gov
 		Currently the last-modified headers are not enabled on the server so timestamping is not available.
 		--no-clobber is used to ensure existing files are not re-downloaded. This will, however, not retrieve updated files
-		Implementation uses urllib.
+		Implementation uses urllib to get list of files to download.
 	"""
 
 	def __init__(self, netloc, modis_terra, collection, save_dir, min_year, *file_ext):
