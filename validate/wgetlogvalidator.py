@@ -145,14 +145,14 @@ class WgetLogValidator:
                     self.summary += '\t' + f + '\n'
             else:
                 self.summary += 'no files downloaded\n'
-
+            """
             if len(self.saved_file_locs) > 0:
                 self.summary += 'file save location(s):\n'
                 for f in self.saved_file_locs:
                     self.summary += '\t' + f + '\n'
             else:
                 self.summary += 'no files saved\n'
-
+            """
             del self.download_list[:]
             del self.saved_file_locs[:]
 
