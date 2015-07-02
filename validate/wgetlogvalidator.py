@@ -50,7 +50,7 @@ class WgetLogValidator:
     def str_file_count(self):
         return "file download count = " + str(self.file_count())
 
-    def validate_logs(self, *logfiles):
+    def validate_logs(self, logfiles):
         for logfilename in logfiles:
 
             # logicals, re match objects for checking status of download requests:

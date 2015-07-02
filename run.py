@@ -4,43 +4,33 @@ def run():
 	from retriever.datafetch import FtpFetch, USGSFetch, NERSCFetch
 	from validate.wgetlogvalidator import WgetLogValidator
 	from utils.emailutils import GmailSend
-	
-	# setup downloads
-	d = FtpFetch("ftp.cdc.noaa.gov", "Datasets/ncep.reanalysis2/gaussian_grid", "shum.2m.gauss.", "/Users/asmuniz/ProjectCode/data/shum", "hdf", "xml", "nc")
-	air = FtpFetch("ftp.cdc.noaa.gov", "Datasets/ncep.reanalysis2/gaussian_grid", "air.2m.gauss.", "/Users/asmuniz/ProjectCode/data/air", "hdf", "xml", "nc")
-	mintemp = FtpFetch("ftp.cdc.noaa.gov", "Datasets/ncep.reanalysis2.dailyavgs/gaussian_grid", "tmin.2m.gauss.", "/Users/asmuniz/ProjectCode/data/tmin", "hdf", "xml", "nc")
-	uwnd = FtpFetch("ftp.cdc.noaa.gov", "Datasets/ncep.reanalysis2/gaussian_grid", "uwnd.10m.gauss.", "/Users/asmuniz/ProjectCode/data/uwnd", "hdf", "xml", "nc")
-	
-	mod13a1 = USGSFetch('MOLT', 'MOD13A1.005', '/Users/asmuniz/ProjectCode/data/MOD13A1.005', "2015", "hdf", "xml", "nc")
-	mod15a2 = USGSFetch('MOLT', 'MOD15A2.005', '/Users/asmuniz/ProjectCode/data/MOD15A2.005', "2015", "hdf", "xml", "nc")
-	mcd43b2 = USGSFetch('MOTA', 'MCD43B2.005', '/Users/asmuniz/ProjectCode/data/MCD43B2.005', "2015", "hdf", "xml", "nc")
-	mcd43b3 = USGSFetch('MOTA', 'MCD43B3.005', '/Users/asmuniz/ProjectCode/data/MCD43B3.005', "2015", "hdf", "xml", "nc")
-	mcd12q1 = USGSFetch('MOTA', 'MCD12Q1.051', '/Users/asmuniz/ProjectCode/data/MCD12Q1.051', "2012", "hdf", "xml", "nc")
+	import json
 
-	mod04_l2 = NERSCFetch('MOD04_L2', '/Users/asmuniz/ProjectCode/data/MOD04_L2', "2013", "tar")
-	mod05_l2 = NERSCFetch('MOD05_L2', '/Users/asmuniz/ProjectCode/data/MOD05_L2', "2013", "tar")
-	mod06_l2 = NERSCFetch('MOD06_L2', '/Users/asmuniz/ProjectCode/data/MOD06_L2', "2013", "tar")
-	mod07_l2 = NERSCFetch('MOD07_L2', '/Users/asmuniz/ProjectCode/data/MOD07_L2', "2013", "tar")
-	mod11_l2 = NERSCFetch('MOD11_L2', '/Users/asmuniz/ProjectCode/data/MOD11_L2', "2013", "tar")
+	f = open("/Users/asmuniz/Desktop/data.json", "r")
+	jsonobj = json.loads(f.read())
+	f.close()
 
-	# perform download operation
-	d.fetch()
-	air.fetch()
-	mintemp.fetch()
-	uwnd.fetch()
-	mod13a1.fetch()
-	mod15a2.fetch()
-	mcd43b2.fetch()
-	mcd43b3.fetch()
-	mod04_l2.fetch()
-	mod05_l2.fetch()
-	mod06_l2.fetch()
-	mcd12q1.fetch()
-	
-	# validate wget logs
+	# queue up fetch objects
+	fetch_list = []
+	for obj in jsonobj['ftp']:
+		fetch_list.append(FtpFetch(obj['site'], obj['collection'], obj['file_name_root'], obj['save_dir'], obj['exts']))
+
+	for obj in jsonobj['usgs']:
+		fetch_list.append(USGSFetch(obj['modis_terra'], obj['collection'], obj['save_dir'], obj['min_year'], obj['exts']))
+
+	for obj in jsonobj['nersc']:
+		fetch_list.append(NERSCFetch(obj['collection'], obj['save_dir'], obj['min_year'], obj['exts']))
+
+	#fetch
+	logs = []
+	for fobj in fetch_list:
+		fobj.fetch()
+		logs.append(fobj.log_loc)
+
+	#validate logs
 	logV = WgetLogValidator()
-	logV.validate_logs(d.log_loc, air.log_loc, mintemp.log_loc, uwnd.log_loc, mod13a1.log_loc, mod15a2.log_loc, mcd43b2.log_loc, mcd43b3.log_loc, mcd12q1.log_loc, mod04_l2.log_loc, mod05_l2.log_loc, mod06_l2.log_loc, mod07_l2.log_loc, mod11_l2.log_loc) # append log files
-	
+	logV.validate_logs(logs)
+
 	#set up email
 	credfile = open("/Users/asmuniz/Desktop/emailcred.txt", 'r')
 	login_user = credfile.readline().rstrip('\n')
@@ -58,7 +48,6 @@ def run():
 
 	mailObj = GmailSend(login_user, user_pwd, from_user, subject, text, to_users)
 	mailObj.send_email()
-	
 	
 if __name__ == "__main__":
 	run()

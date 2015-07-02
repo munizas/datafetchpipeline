@@ -22,14 +22,14 @@ class FtpFetch:
 	Class that connects to an ftp site to retrieve data.
 	"""
 
-	def __init__(self, netloc, collection, file_name_root, save_dir, *file_ext):
+	def __init__(self, netloc, collection, file_name_root, save_dir, file_ext):
 		"""
 		Args:
 			netloc (string): the url of the ftp server
 			collection (string): the path of the desired collection
 			file_name_root (string): the root name of the desired files
 			save_dir (string): the location to save the downloaded data
-			*file_ext: variable length argument list that contains desired file extensions
+			file_ext (list): variable length argument list that contains desired file extensions
 
 			example use:
 
@@ -105,14 +105,14 @@ class USGSFetch:
 	Implementation uses urllib to get list of files to download.
 	"""
 
-	def __init__(self, modis_terra, collection, save_dir, min_year, *file_ext):
+	def __init__(self, modis_terra, collection, save_dir, min_year, file_ext):
 		"""
 		Args:
 			modis_terra (string): select from ['ASTT', 'MOLA', 'MOLT', 'MOTA', 'SRTM', 'WELD'] check website for updates
 			collection (string): the desired collection such as 'MOD13A1.005'
 			save_dir (string): the location to save the downloaded data
 			min_year (string): the minimum year to retrieve data
-			*file_ext: variable length argument list that contains desired file extensions
+			file_ext (list): variable length argument list that contains desired file extensions
 
 			example use:
 
@@ -203,14 +203,14 @@ class NERSCFetch:
 		Implementation uses urllib to get list of files to download.
 	"""
 
-	def __init__(self, collection, save_dir, min_year, *file_ext):
+	def __init__(self, collection, save_dir, min_year, file_ext):
 		"""
 		Args:
 			collection (string): select from ['MOD04_L2', 'MOD05_L2', 'MOD06_L2', 'MOD07_L2', 'MOD11_L2', 'MYD04_L2', 'MYD05_L2', 'MYD06_L2', 'MYD07_L2', 'MYD11_L2']
 				check website for updates
 			save_dir (string): the location to save the downloaded data
 			min_year (string): the minimum year to retrieve data
-			*file_ext: variable length argument list that contains desired file extensions
+			file_ext (list): variable length argument list that contains desired file extensions
 
 			example use:
 
