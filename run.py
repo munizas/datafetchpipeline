@@ -15,13 +15,14 @@ def run():
 	mod15a2 = USGSFetch('MOLT', 'MOD15A2.005', '/Users/asmuniz/ProjectCode/data/MOD15A2.005', "2015", "hdf", "xml", "nc")
 	mcd43b2 = USGSFetch('MOTA', 'MCD43B2.005', '/Users/asmuniz/ProjectCode/data/MCD43B2.005', "2015", "hdf", "xml", "nc")
 	mcd43b3 = USGSFetch('MOTA', 'MCD43B3.005', '/Users/asmuniz/ProjectCode/data/MCD43B3.005', "2015", "hdf", "xml", "nc")
-	mcd12q1 = USGSFetch('MOTA', 'MCD12Q1.051', '/Users/asmuniz/ProjectCode/data/MCD12Q1.051', "2015", "hdf", "xml", "nc")
+	mcd12q1 = USGSFetch('MOTA', 'MCD12Q1.051', '/Users/asmuniz/ProjectCode/data/MCD12Q1.051', "2012", "hdf", "xml", "nc")
 
 	mod04_l2 = NERSCFetch('MOD04_L2', '/Users/asmuniz/ProjectCode/data/MOD04_L2', "2013", "tar")
 	mod05_l2 = NERSCFetch('MOD05_L2', '/Users/asmuniz/ProjectCode/data/MOD05_L2', "2013", "tar")
 	mod06_l2 = NERSCFetch('MOD06_L2', '/Users/asmuniz/ProjectCode/data/MOD06_L2', "2013", "tar")
 
 	# perform download operation
+	"""
 	d.fetch()
 	air.fetch()
 	mintemp.fetch()
@@ -34,6 +35,7 @@ def run():
 	mod05_l2.fetch()
 	mod06_l2.fetch()
 	mcd12q1.fetch()
+	"""
 	
 	# validate wget logs
 	logV = WgetLogValidator()

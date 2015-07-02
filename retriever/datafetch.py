@@ -51,6 +51,8 @@ class FtpFetch:
 		for ext in file_ext:
 			self.opts += ['-A' + file_name_root + '*' + ext]
 
+		self.log_loc = ''
+
 	def fetch(self):
 		"""
 			Starts the process to download the requested data.
@@ -130,6 +132,8 @@ class USGSFetch:
 
 		for ext in file_ext:
 			self.opts += ['-A' + '*' + ext]
+
+		self.log_loc = ''
 
 	def fetch(self):
 		"""
@@ -229,6 +233,8 @@ class NERSCFetch:
 		self.opts += ['-Ridx']
 
 		self.grids = ("240", "1200")
+
+		self.log_loc = ''
 
 	def fetch(self):
 		"""
