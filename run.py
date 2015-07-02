@@ -20,9 +20,10 @@ def run():
 	mod04_l2 = NERSCFetch('MOD04_L2', '/Users/asmuniz/ProjectCode/data/MOD04_L2', "2013", "tar")
 	mod05_l2 = NERSCFetch('MOD05_L2', '/Users/asmuniz/ProjectCode/data/MOD05_L2', "2013", "tar")
 	mod06_l2 = NERSCFetch('MOD06_L2', '/Users/asmuniz/ProjectCode/data/MOD06_L2', "2013", "tar")
+	mod07_l2 = NERSCFetch('MOD07_L2', '/Users/asmuniz/ProjectCode/data/MOD07_L2', "2013", "tar")
+	mod11_l2 = NERSCFetch('MOD11_L2', '/Users/asmuniz/ProjectCode/data/MOD11_L2', "2013", "tar")
 
 	# perform download operation
-	"""
 	d.fetch()
 	air.fetch()
 	mintemp.fetch()
@@ -35,11 +36,10 @@ def run():
 	mod05_l2.fetch()
 	mod06_l2.fetch()
 	mcd12q1.fetch()
-	"""
 	
 	# validate wget logs
 	logV = WgetLogValidator()
-	logV.validate_logs(d.log_loc, air.log_loc, mintemp.log_loc, uwnd.log_loc, mod13a1.log_loc, mod15a2.log_loc, mcd43b2.log_loc, mcd43b3.log_loc, mcd12q1.log_loc, mod04_l2.log_loc, mod05_l2.log_loc, mod06_l2.log_loc) # append log files
+	logV.validate_logs(d.log_loc, air.log_loc, mintemp.log_loc, uwnd.log_loc, mod13a1.log_loc, mod15a2.log_loc, mcd43b2.log_loc, mcd43b3.log_loc, mcd12q1.log_loc, mod04_l2.log_loc, mod05_l2.log_loc, mod06_l2.log_loc, mod07_l2.log_loc, mod11_l2.log_loc) # append log files
 	
 	#set up email
 	credfile = open("/Users/asmuniz/Desktop/emailcred.txt", 'r')
