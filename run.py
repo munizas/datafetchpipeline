@@ -4,9 +4,11 @@ def run():
 	from retriever.datafetch import FtpFetch, USGSFetch, NERSCFetch
 	from validate.wgetlogvalidator import WgetLogValidator
 	from utils.emailutils import GmailSend
+	from config.config import Config
 	import json
 
-	f = open("/Users/asmuniz/Desktop/data.json", "r")
+	config = Config()
+	f = open(config.datapath(), "r")
 	jsonobj = json.loads(f.read())
 	f.close()
 
@@ -30,23 +32,11 @@ def run():
 	#validate logs
 	logV = WgetLogValidator()
 	logV.validate_logs(logs)
-
-	#set up email
-	credfile = open("/Users/asmuniz/Desktop/emailcred.txt", 'r')
-	login_user = credfile.readline().rstrip('\n')
-	user_pwd = credfile.readline().rstrip('\n')
-	credfile.close()
-	from_user = login_user
-
-	to_users = []
-	emailfile = open("/Users/asmuniz/Desktop/emails.txt", 'r')
-	for email in emailfile:
-		to_users.append(email.rstrip('\n'))
-	emailfile.close()
+	
 	subject = 'Daily Download Summary'
 	text = logV.summary_str()
-
-	mailObj = GmailSend(login_user, user_pwd, from_user, subject, text, to_users)
+	
+	mailObj = GmailSend(config.emailusr(), config.emailpwd(), config.emailusr(), subject, text, config.emaillist())
 	mailObj.send_email()
 	
 if __name__ == "__main__":
