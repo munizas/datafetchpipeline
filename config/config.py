@@ -45,7 +45,6 @@ class Config:
 
 	def save(self):
 		f = open(self.paths['emailcreds'], 'w')
-		print self.paths['emailcreds']
 		f.write(json.dumps(self.credJson, indent=4))
 		f.close()
 
@@ -67,6 +66,7 @@ class Config:
 		parser.add_option("-a", "--add-email", dest='emailadd', help='add email to list')
 		parser.add_option("--email-login-path", dest='loginpath', help='set path to emailcred.json')
 		parser.add_option("--emails-path", dest='emailspath', help='set path to emails.json')
+		parser.add_option("-r", "--remove-email", dest='emailrem', help='remove email from list')
 
 		(options, args) = parser.parse_args()
 
@@ -94,7 +94,12 @@ class Config:
 		if options.emailspath:
 			self.paths['emaillist'] = options.emailspath
 
+		if options.emailrem and options.emailrem in self.emaillist():
+			self.emaillist().remove(options.emailrem)
+
 		self.save()
+
+		self.printConfig()
 
 	def printConfig(self):
 		print "\nCurrent configuration setup:**************\n"
@@ -113,8 +118,7 @@ class Config:
 
 if __name__ == "__main__":
 	c = Config()
-	c.printConfig()
-	#c.cmdline()
+	c.cmdline()
 	"""
 	print c.datapath()
 	print c.emailusr()
