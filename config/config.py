@@ -6,37 +6,55 @@ class Config:
 	def __init__(self):
 		self.config_path = "/Users/asmuniz/Desktop/config.json"
 		f = open(self.config_path, 'r')
-		jsonObj = json.loads(f.read())
+		self.paths = json.loads(f.read())
 		f.close()
-
-		self.data_path = jsonObj['datapath']
 		
 		# extract email credentials
-		credfile = open(jsonObj['emailcreds'], 'r')
-		self.email_user = credfile.readline().rstrip('\n')
-		self.email_pwd = credfile.readline().rstrip('\n')
+		credfile = open(self.paths['emailcreds'], 'r')
+		self.credJson = json.loads(credfile.read())
 		credfile.close()
 
-		self.email_list = []
-		emailfile = open(jsonObj['emaillist'], 'r')
-		for email in emailfile:
-			self.email_list.append(email.rstrip('\n'))
+		self.email_dict = {}
+		emailfile = open(self.paths['emaillist'], 'r')
+		self.email_dict = json.loads(emailfile.read())
 		emailfile.close()
 
 	def datapath(self):
-		return self.data_path
+		return self.paths['datapath']
 
 	def emailusr(self):
-		return self.email_user
+		return self.credJson['emailusr']
 
 	def emailpwd(self):
-		return self.email_pwd
+		return self.credJson['emailpwd']
 
 	def emaillist(self):
-		return self.email_list
+		return self.email_dict['emails']
 
-	def hi(self):
-		return 'hi'
+	def setdatapath(self, path):
+		self.paths['datapath'] = path
+
+	def setemailusr(self, usr):
+		self.credJson['emailusr'] = usr
+
+	def setemailpwd(self, pwd):
+		self.credJson['emailpwd'] = pwd
+
+	def setemaillist(self, email_list):
+		self.email_dict['emaillist'] = email_list
+
+	def save(self):
+		f = open(self.paths['emailcreds'], 'w')
+		f.write(json.dumps(self.credJson, indent=4))
+		f.close()
+
+		f = open(self.paths['emaillist'], 'w')
+		f.write(json.dumps(self.email_dict, indent=4))
+		f.close()
+
+		f = open(self.config_path, 'w')
+		f.write(json.dumps(self.paths, indent=4))
+		f.close()
 
 if __name__ == "__main__":
 	c = Config()
@@ -44,3 +62,5 @@ if __name__ == "__main__":
 	print c.emailusr()
 	print c.emailpwd()
 	print c.emaillist()
+	c.setdatapath('/Users/asmuniz/Desktop/data.json')
+	c.save()
