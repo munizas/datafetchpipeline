@@ -1,7 +1,0 @@
-datapipeline.egg-info/PKG-INFO
-datapipeline.egg-info/SOURCES.txt
-datapipeline.egg-info/dependency_links.txt
-datapipeline.egg-info/top_level.txt
-retriever/__init__.py
-retriever/datafetch.py
-tests/testftpfetch.py
