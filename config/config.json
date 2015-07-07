@@ -1,5 +1,0 @@
-{
-    "emailcreds": "/Users/asmuniz/ProjectCode/datapipeline/config/emailcred.json", 
-    "datapath": "/Users/asmuniz/ProjectCode/datapipeline/config/data.json", 
-    "emaillist": "/Users/asmuniz/ProjectCode/datapipeline/config/emails.json"
-}
