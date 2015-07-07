@@ -2,6 +2,7 @@
 
 import json
 import os
+import sys
 
 class Config:
 	def __init__(self):
@@ -119,4 +120,7 @@ class Config:
 
 if __name__ == "__main__":
 	c = Config()
-	c.cmdline()
+	if len(sys.argv) > 1:
+		c.cmdline()
+	else:
+		c.printConfig()
