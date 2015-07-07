@@ -6,23 +6,22 @@ import sys
 
 class Config:
 	def __init__(self):
-		self.config_path = os.getcwd() + "/config/config.json"
-		f = open(self.config_path, 'r')
-		self.paths = json.loads(f.read())
-		f.close()
+		self.data_path = os.getcwd() + "/config/data.json"
+		self.creds_path = os.getcwd() + "/config/emailcred.json"
+		self.emails_path = os.getcwd() + "/config/emails.json"
 		
 		# extract email credentials
-		credfile = open(self.paths['emailcreds'], 'r')
+		credfile = open(self.creds_path, 'r')
 		self.credJson = json.loads(credfile.read())
 		credfile.close()
 
 		self.email_dict = {}
-		emailfile = open(self.paths['emaillist'], 'r')
+		emailfile = open(self.emails_path, 'r')
 		self.email_dict = json.loads(emailfile.read())
 		emailfile.close()
 
 	def datapath(self):
-		return self.paths['datapath']
+		return self.data_path
 
 	def emailusr(self):
 		return self.credJson['emailusr']
@@ -32,9 +31,6 @@ class Config:
 
 	def emaillist(self):
 		return self.email_dict['emails']
-
-	def setdatapath(self, path):
-		self.paths['datapath'] = path
 
 	def setemailusr(self, usr):
 		self.credJson['emailusr'] = usr
@@ -46,34 +42,24 @@ class Config:
 		self.email_dict['emaillist'] = email_list
 
 	def save(self):
-		f = open(self.paths['emailcreds'], 'w')
+		f = open(self.creds_path, 'w')
 		f.write(json.dumps(self.credJson, indent=4))
 		f.close()
 
-		f = open(self.paths['emaillist'], 'w')
+		f = open(self.emails_path, 'w')
 		f.write(json.dumps(self.email_dict, indent=4))
-		f.close()
-
-		f = open(self.config_path, 'w')
-		f.write(json.dumps(self.paths, indent=4))
 		f.close()
 
 	def cmdline(self):
 		from optparse import OptionParser
 		parser = OptionParser()
-		parser.add_option("-d", "--data-path", dest='datapath', help='set path to data.json')
 		parser.add_option("-e", "--email-login", dest='emailusr', help='set email login user')
 		parser.add_option("-p", "--email-pwd", dest='emailpwd', help='set password for login email')
 		parser.add_option("-l", "--email-list", dest='emails', help='set list of emails to send notifications to')
 		parser.add_option("-a", "--add-email", dest='emailadd', help='add email to list')
-		parser.add_option("--email-login-path", dest='loginpath', help='set path to emailcred.json')
-		parser.add_option("--emails-path", dest='emailspath', help='set path to emails.json')
 		parser.add_option("-r", "--remove-email", dest='emailrem', help='remove email from list')
 
 		(options, args) = parser.parse_args()
-
-		if options.datapath:
-			self.setdatapath(options.datapath)
 
 		if options.emailusr:
 			self.setemailusr(options.emailusr)
@@ -90,17 +76,10 @@ class Config:
 		if options.emailadd:
 			self.emaillist().append(options.emailadd)
 
-		if options.loginpath:
-			self.paths['emailcreds'] = options.loginpath
-
-		if options.emailspath:
-			self.paths['emaillist'] = options.emailspath
-
 		if options.emailrem and options.emailrem in self.emaillist():
 			self.emaillist().remove(options.emailrem)
 
 		self.save()
-
 		self.printConfig()
 
 	def printConfig(self):
@@ -108,8 +87,8 @@ class Config:
 		print "file paths:"
 		print "\tconfig path: " + self.config_path
 		print "\tdata path: " + self.datapath()
-		print "\temail login path: " + self.paths['emailcreds']
-		print "\temail list path: " + self.paths['emaillist']
+		print "\temail login path: " + self.creds_path
+		print "\temail list path: " + self.emails_path
 		print "\nemail login:"
 		print "\tuser: " + self.emailusr()
 		print "\tpass: " + self.emailpwd()
