@@ -1,10 +1,11 @@
 #!/usr/bin/python
 
 import json
+import os
 
 class Config:
 	def __init__(self):
-		self.config_path = "/Users/asmuniz/Desktop/config-files/config.json"
+		self.config_path = os.getcwd() + "/config/config.json"
 		f = open(self.config_path, 'r')
 		self.paths = json.loads(f.read())
 		f.close()
@@ -119,11 +120,3 @@ class Config:
 if __name__ == "__main__":
 	c = Config()
 	c.cmdline()
-	"""
-	print c.datapath()
-	print c.emailusr()
-	print c.emailpwd()
-	print c.emaillist()
-	c.setdatapath('/Users/asmuniz/Desktop/data.json')
-	#c.save()
-	"""

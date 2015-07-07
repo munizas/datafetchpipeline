@@ -1,0 +1,128 @@
+{
+	"ftp": [
+		{
+			"name": "shum",
+			"site": "ftp.cdc.noaa.gov",
+			"collection": "Datasets/ncep.reanalysis2/gaussian_grid",
+			"file_name_root": "shum.2m.gauss.",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/shum",
+			"exts": ["hdf", "xml", "nc"]
+		},
+
+		{
+			"name": "air",
+			"site": "ftp.cdc.noaa.gov",
+			"collection": "Datasets/ncep.reanalysis2/gaussian_grid",
+			"file_name_root": "air.2m.gauss.",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/air",
+			"exts": ["hdf", "xml", "nc"]
+		},
+
+		{
+			"name": "tmin",
+			"site": "ftp.cdc.noaa.gov",
+			"collection": "Datasets/ncep.reanalysis2.dailyavgs/gaussian_grid",
+			"file_name_root": "tmin.2m.gauss.",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/tmin",
+			"exts": ["hdf", "xml", "nc"]
+		},
+
+		{
+			"name": "uwnd",
+			"site": "ftp.cdc.noaa.gov",
+			"collection": "Datasets/ncep.reanalysis2/gaussian_grid",
+			"file_name_root": "uwnd.10m.gauss.",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/uwnd",
+			"exts": ["hdf", "xml", "nc"]
+		}
+	],
+
+	"usgs": [
+		{
+			"name": "mod13a1",
+			"modis_terra": "MOLT",
+			"collection": "MOD13A1.005",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MOD13A1.005",
+			"min_year": "2015",
+			"exts": ["hdf", "xml", "nc"]
+		},
+
+		{
+			"name": "mod15a2",
+			"modis_terra": "MOLT",
+			"collection": "MOD15A2.005",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MOD15A2.005",
+			"min_year": "2015",
+			"exts": ["hdf", "xml", "nc"]
+		},
+
+		{
+			"name": "mcd43b2",
+			"modis_terra": "MOTA",
+			"collection": "MCD43B2.005",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MCD43B2.005",
+			"min_year": "2015",
+			"exts": ["hdf", "xml", "nc"]
+		},
+
+		{
+			"name": "mcd43b3",
+			"modis_terra": "MOTA",
+			"collection": "MCD43B3.005",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MCD43B3.005",
+			"min_year": "2015",
+			"exts": ["hdf", "xml", "nc"]
+		},
+
+		{
+			"name": "mcd12q1",
+			"modis_terra": "MOTA",
+			"collection": "MCD12Q1.051",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MCD12Q1.051",
+			"min_year": "2012",
+			"exts": ["hdf", "xml", "nc"]
+		}
+	],
+
+	"nersc": [
+		{
+			"name": "mod04_l2",
+			"collection": "MOD04_L2",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MOD04_L2",
+			"min_year": "2013",
+			"exts": ["tar"]
+		},
+
+		{
+			"name": "mod05_l2",
+			"collection": "MOD05_L2",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MOD05_L2",
+			"min_year": "2013",
+			"exts": ["tar"]
+		},
+
+		{
+			"name": "mod06_l2",
+			"collection": "MOD06_L2",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MOD06_L2",
+			"min_year": "2013",
+			"exts": ["tar"]
+		},
+
+		{
+			"name": "mod07_l2",
+			"collection": "MOD07_L2",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MOD07_L2",
+			"min_year": "2013",
+			"exts": ["tar"]
+		},
+
+		{
+			"name": "mod11_l2",
+			"collection": "MOD11_L2",
+			"save_dir": "/Users/asmuniz/ProjectCode/data/MOD11_L2",
+			"min_year": "2013",
+			"exts": ["tar"]
+		}
+	]
+}
