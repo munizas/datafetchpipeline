@@ -85,7 +85,6 @@ class Config:
 	def printConfig(self):
 		print "\nCurrent configuration setup:**************\n"
 		print "file paths:"
-		print "\tconfig path: " + self.config_path
 		print "\tdata path: " + self.datapath()
 		print "\temail login path: " + self.creds_path
 		print "\temail list path: " + self.emails_path
