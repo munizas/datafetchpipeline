@@ -7,7 +7,7 @@ def test_params():
 	file_name_root = 'shum.2m.gauss.'
 	save_dir = '/Users/asmuniz/ProjectCode/data/shum'
 	
-	d = FtpFetch(netloc, collection, file_name_root, save_dir, "hdf", "xml", "nc")
+	d = FtpFetch(netloc, collection, file_name_root, save_dir, ["hdf", "xml", "nc"])
 
 	assert d.scheme == scheme
 	assert d.netloc == netloc
