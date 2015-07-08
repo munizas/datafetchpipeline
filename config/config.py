@@ -6,22 +6,24 @@ import sys
 
 class Config:
 	def __init__(self):
-		self.data_path = os.getcwd() + "/config/data.json"
-		self.creds_path = os.getcwd() + "/config/emailcred.json"
-		self.emails_path = os.getcwd() + "/config/emails.json"
+		self.config_path = "/Users/asmuniz/ProjectCode/datapipeline/config/config.json"
+
+		f = open(self.config_path, 'r')
+		self.paths = json.loads(f.read())
+		f.close()
 		
 		# extract email credentials
-		credfile = open(self.creds_path, 'r')
+		credfile = open(self.paths['emailcreds'], 'r')
 		self.credJson = json.loads(credfile.read())
 		credfile.close()
 
 		self.email_dict = {}
-		emailfile = open(self.emails_path, 'r')
+		emailfile = open(self.paths['emaillist'], 'r')
 		self.email_dict = json.loads(emailfile.read())
 		emailfile.close()
 
 	def datapath(self):
-		return self.data_path
+		return self.paths['datapath']
 
 	def emailusr(self):
 		return self.credJson['emailusr']
@@ -42,11 +44,11 @@ class Config:
 		self.email_dict['emaillist'] = email_list
 
 	def save(self):
-		f = open(self.creds_path, 'w')
+		f = open(self.paths['emailcreds'], 'w')
 		f.write(json.dumps(self.credJson, indent=4))
 		f.close()
 
-		f = open(self.emails_path, 'w')
+		f = open(self.paths['emaillist'], 'w')
 		f.write(json.dumps(self.email_dict, indent=4))
 		f.close()
 
@@ -86,8 +88,8 @@ class Config:
 		print "\nCurrent configuration setup:**************\n"
 		print "file paths:"
 		print "\tdata path: " + self.datapath()
-		print "\temail login path: " + self.creds_path
-		print "\temail list path: " + self.emails_path
+		print "\temail login path: " + self.paths['emailcreds']
+		print "\temail list path: " + self.paths['emaillist']
 		print "\nemail login:"
 		print "\tuser: " + self.emailusr()
 		print "\tpass: " + self.emailpwd()
