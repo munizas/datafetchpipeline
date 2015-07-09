@@ -3,6 +3,7 @@
 import optparse
 import re
 import sys
+import os
 from datetime import date
 
 class WgetLogValidator:
@@ -139,20 +140,15 @@ class WgetLogValidator:
                 for failed_target in errlist:
                     print '   %s' % failed_target
 
-            if len(self.download_list) > 0:
-                self.summary += 'file(s) downloaded:\n'
-                for f in self.download_list:
-                    self.summary += '\t' + f + '\n'
+            if len(self.saved_file_locs) > 0:
+                download_size = 0
+                for f in self.saved_file_locs:
+                    download_size += os.path.getsize(f[1:-1]) # remove single quotes
+                self.summary += 'files downloaded: ' + str(len(self.saved_file_locs)) + '\n'
+                self.summary += 'total download size: ' + str(download_size) + ' bytes\n'
             else:
                 self.summary += 'no files downloaded\n'
-            """
-            if len(self.saved_file_locs) > 0:
-                self.summary += 'file save location(s):\n'
-                for f in self.saved_file_locs:
-                    self.summary += '\t' + f + '\n'
-            else:
-                self.summary += 'no files saved\n'
-            """
+            
             del self.download_list[:]
             del self.saved_file_locs[:]
 
@@ -160,5 +156,6 @@ class WgetLogValidator:
 
 if __name__ == '__main__':
     w = WgetLogValidator()
-    w.validate_logs('/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/success.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/no-re-retrieve.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/network-error.log')
+    logs = ['/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/success.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/no-re-retrieve.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/network-error.log']
+    w.validate_logs(logs)
     print w.summary_str()
