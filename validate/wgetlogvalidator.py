@@ -15,6 +15,7 @@ class WgetLogValidator:
         # regexp for timestamp string containing an 'http' hdf (or xml) target:
         self.timestamp   = r'--\d{4}-\d{2}-\d{2} *\d{2}:\d{2}:\d{2}--'
         self.target      = r'(http|ftp).*\.(hdf|nc).*$'
+        self.regex_save_loc    = ".*('/.*/.*') saved.*"
         self.timestamp_and_target = re.compile( self.timestamp + ' *' + '(' + self.target + ')')    # save target as group
 
         self.regex_saved_file_loc = re.compile(r'=> (\'.*\')')
@@ -108,6 +109,7 @@ class WgetLogValidator:
                     downloading = False
                     saved_match = None
                     self.download_list.append('\'' + tt_match.group(1) + '\'')
+                    self.saved_file_locs.append(re.search(self.regex_save_loc, line).group(1))
                 elif self.finished.match(line):
                     _finished_  = True
                 elif self.regex_saved_file_loc.search(line):
@@ -146,6 +148,7 @@ class WgetLogValidator:
                     download_size += os.path.getsize(f[1:-1]) # remove single quotes
                 self.summary += 'files downloaded: ' + str(len(self.saved_file_locs)) + '\n'
                 self.summary += 'total download size: ' + str(download_size) + ' bytes\n'
+                self.summary += 'saved to location: ' + re.search('/.*/', self.saved_file_locs[0][1:-1]).group() + '\n'
             else:
                 self.summary += 'no files downloaded\n'
             
@@ -156,6 +159,6 @@ class WgetLogValidator:
 
 if __name__ == '__main__':
     w = WgetLogValidator()
-    logs = ['/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/success.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/no-re-retrieve.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/network-error.log']
+    logs = ['/Users/asmuniz/ProjectCode/data/MOD04_L2/logs/2015-06-30-MOD04_L2grid(240)-2013.log', '/Users/asmuniz/ProjectCode/data/MCD12Q1.051/logs/2015-07-03-2012.01.01.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/success.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/no-re-retrieve.log', '/Users/asmuniz/Desktop/develop/project-info/gregg_data_processing/network-error.log']
     w.validate_logs(logs)
     print w.summary_str()
