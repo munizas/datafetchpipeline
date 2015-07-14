@@ -3,6 +3,8 @@
 import json
 import os
 import sys
+import re
+from datetime import date
 
 class Config:
 	def __init__(self):
@@ -21,6 +23,23 @@ class Config:
 		emailfile = open(self.paths['emaillist'], 'r')
 		self.email_dict = json.loads(emailfile.read())
 		emailfile.close()
+
+		self.preconwatchlist = []
+		f = open(self.paths['convertwatch'], 'r')
+		self.preconwatchlist = json.loads(f.read())
+		f.close()
+
+	def preconfilename(self):
+		return self.convertlistpath() + str(date.today()) + '-preconlist.txt'
+
+	def redataproduct(self):
+		return '.*/data/(.*)/logs/.*'
+
+	def preconwatch(self):
+		return self.preconwatchlist['products']
+
+	def convertlistpath(self):
+		return self.paths['convertlist']
 
 	def datapath(self):
 		return self.paths['datapath']

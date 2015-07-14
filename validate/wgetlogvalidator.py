@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from config.config import Config
 import optparse
 import re
 import sys
@@ -37,6 +38,8 @@ class WgetLogValidator:
 
         self.summary = 'Wget Log Summary (' + str(date.today()) + '):*************************************************************************\n\n'
 
+        self.config = Config()
+
     def summary_str(self):
         return self.summary
 
@@ -53,6 +56,9 @@ class WgetLogValidator:
         return "file download count = " + str(self.file_count())
 
     def validate_logs(self, logfiles):
+        # write new download file paths to preconlist.txt
+        precon = open(self.config.preconfilename(), 'w')
+
         for logfilename in logfiles:
 
             # logicals, re match objects for checking status of download requests:
@@ -143,11 +149,16 @@ class WgetLogValidator:
                     print '   %s' % failed_target
 
             if len(self.saved_file_locs) > 0:
+                mo = re.search(self.config.redataproduct(), logfilename)
                 download_size = 0
+                isPrecon = mo and mo.group(1) in self.config.preconwatch() # check if this logfile is monitored for precon processing
                 for f in self.saved_file_locs:
-                    download_size += os.path.getsize(f[1:-1]) # remove single quotes
+                    f = f.replace("'", "")
+                    download_size += os.path.getsize(f) # remove single quotes
+                    if isPrecon:
+                        precon.write(f + '\n')
                 self.summary += 'files downloaded: ' + str(len(self.saved_file_locs)) + '\n'
-                self.summary += 'total download size: ' + str(download_size) + ' bytes\n'
+                self.summary += 'total download size: ' + str(download_size/1000000000.0) + ' GB\n'
                 self.summary += 'saved to location: ' + re.search('/.*/', self.saved_file_locs[0][1:-1]).group() + '\n'
             else:
                 self.summary += 'no files downloaded\n'
@@ -156,6 +167,8 @@ class WgetLogValidator:
             del self.saved_file_locs[:]
 
             self.summary += '\n*******************************************************************************************************\n\n'
+
+        precon.close()
 
 if __name__ == '__main__':
     w = WgetLogValidator()
