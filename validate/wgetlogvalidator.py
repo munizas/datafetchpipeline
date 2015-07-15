@@ -169,6 +169,9 @@ class WgetLogValidator:
             self.summary += '\n*******************************************************************************************************\n\n'
 
         precon.close()
+        # if nothing was written, delete empty file
+        if os.path.getsize(self.config.preconfilename()) == 0:
+            os.remove(self.config.preconfilename())
 
 if __name__ == '__main__':
     w = WgetLogValidator()
