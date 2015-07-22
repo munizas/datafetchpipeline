@@ -13,9 +13,11 @@ import time
 import datetime
 import errno
 import urllib
+from config.config import Config
 
 # sleep interval in seconds
 ps_check_interval = 15
+config = Config()
 
 class FtpFetch:
 	"""
@@ -37,7 +39,7 @@ class FtpFetch:
 		"""
 
 		# path to wget
-		self.cmd = ['/usr/local/bin/wget']
+		self.cmd = [config.wgetpath()]
 		# wget options
 		self.opts = ['--background', '--recursive', '--server-response', '--timestamping', '-nd']	
 
@@ -119,7 +121,7 @@ class USGSFetch:
 				fetchObj = USGSFetch('MOLT', 'MOD13A1.005', '/Users/asmuniz/ProjectCode/data/MOD13A1.005', "2015", "hdf", "xml", "nc")
 		"""	
 
-		self.cmd = ['/usr/local/bin/wget']
+		self.cmd = [config.wgetpath()]
 		self.opts = ['-Ahdf,xml', '--background', '--level=1', '--recursive', '--no-host-directories', '--server-response', '--no-clobber']
 
 		self.scheme = 'http'
@@ -217,7 +219,7 @@ class NERSCFetch:
 				fetchObj = NERSCFetch('MOD04_L2', '/Users/asmuniz/ProjectCode/data/MOD04_L2', "2013", "tar")
 		"""	
 
-		self.cmd = ['/usr/local/bin/wget']
+		self.cmd = [config.wgetpath()]
 		self.opts = ['--background', '--cut-dirs=5', '--level=1', '--no-host-directories', '--recursive', '-e robots=off', '--server-response', '--no-clobber']
 
 		self.scheme = 'https'

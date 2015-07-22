@@ -3,5 +3,6 @@
 	"datapath": "/Users/asmuniz/ProjectCode/datapipeline/config/data.json",
 	"emaillist": "/Users/asmuniz/ProjectCode/datapipeline/config/emails.json",
 	"convertlist": "/Users/asmuniz/ProjectCode/datapipeline/filetrack/",
-	"convertwatch": "/Users/asmuniz/ProjectCode/datapipeline/config/preprocessproducts.json"
+	"convertwatch": "/Users/asmuniz/ProjectCode/datapipeline/config/preprocessproducts.json",
+	"wget": "/usr/local/bin/wget"
 }

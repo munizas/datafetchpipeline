@@ -29,6 +29,9 @@ class Config:
 		self.preconwatchlist = json.loads(f.read())
 		f.close()
 
+	def wgetpath(self):
+		return self.paths['wget']
+
 	def preconfilename(self):
 		return self.convertlistpath() + str(date.today()) + '-preconlist.txt'
 
