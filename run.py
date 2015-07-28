@@ -22,7 +22,7 @@ def run():
 		for obj in jsonobj['usgs']:
 			fetch_list.append(USGSFetch(obj['modis_terra'], obj['collection'], obj['save_dir'], obj['min_year'], obj['exts']))
 
-	if 'nersc' in jsonobj:ß
+	if 'nersc' in jsonobj:
 		for obj in jsonobj['nersc']:
 			fetch_list.append(NERSCFetch(obj['collection'], obj['save_dir'], obj['min_year'], obj['exts']))
 
