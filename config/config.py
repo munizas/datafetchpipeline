@@ -112,6 +112,7 @@ class Config:
 		print "\tdata path: " + self.datapath()
 		print "\temail login path: " + self.paths['emailcreds']
 		print "\temail list path: " + self.paths['emaillist']
+		print "\twget path: " + self.paths['wget']
 		print "\nemail login:"
 		print "\tuser: " + self.emailusr()
 		print "\tpass: " + self.emailpwd()
